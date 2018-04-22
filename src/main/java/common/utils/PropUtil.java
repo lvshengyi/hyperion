@@ -37,7 +37,6 @@ public class PropUtil {
      */
     private static Properties ini() {
         try(InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream(DEFAULT_PROP_FILE_NAME)) {
-
             if (is == null) {
                 throw new FileNotFoundException(DEFAULT_PROP_FILE_NAME + " is not find");
             }
