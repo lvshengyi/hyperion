@@ -2,19 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1726d1fc-24d5-452d-867e-c61aa9977a9b" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/common/annotation/Sql.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/common/utils/CastUtil.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/common/utils/PropUtil.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/core/poseidon/DataSource$1.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/core/poseidon/DataSource$DataSourceHolder.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/core/poseidon/DataSource.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/core/poseidon/SqlSession.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/core/poseidon/SqlSessionFactory.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/core/poseidon/User.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/core/poseidon/UserMapper.class" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/core/common/LombokTest.java" afterPath="$PROJECT_DIR$/src/test/java/core/common/LombokTest.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -519,8 +507,16 @@
       <workItem from="1523843864053" duration="74000" />
       <workItem from="1523932480627" duration="139000" />
       <workItem from="1524395464503" duration="156000" />
-      <workItem from="1524396287153" duration="758000" />
+      <workItem from="1524396287153" duration="777000" />
     </task>
+    <task id="LOCAL-00001" summary="refactor:删去无用代码">
+      <created>1524403165013</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1524403165013</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -556,7 +552,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="22970000" />
+    <option name="totallyTimeSpent" value="22989000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1096" extended-state="6" />
@@ -595,6 +591,10 @@
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="refactor:删去无用代码" />
+    <option name="LAST_COMMIT_MESSAGE" value="refactor:删去无用代码" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
