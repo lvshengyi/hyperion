@@ -38,4 +38,19 @@ public class DataSource {
      * 数据库密码
      */
     private String password;
+
+    /**
+     * 最大空闲列表连接数
+     */
+    private Integer maxIdleConnectionNum;
+
+    /**
+     * 最大活跃列表连接数
+     */
+    private Integer maxActiveConnectionNum;
+
+    /**
+     * 连接失效时间
+     */
+    private Integer expireTime;
 }
