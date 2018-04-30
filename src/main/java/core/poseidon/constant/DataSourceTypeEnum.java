@@ -1,4 +1,4 @@
-package core.hades.constant;
+package core.poseidon.constant;
 
 import lombok.Getter;
 

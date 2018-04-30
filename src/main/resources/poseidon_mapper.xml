@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<statementMapperMap>
+    <select id="findById" nameSpace="user" resultType="biz.model.domain.User">
+        SELECT * FROM user WHERE id = #{id}
+    </select>
+</statementMapperMap>

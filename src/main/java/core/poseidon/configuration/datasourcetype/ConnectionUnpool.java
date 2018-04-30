@@ -1,6 +1,6 @@
-package core.hades.configuration.datasourcetype;
+package core.poseidon.configuration.datasourcetype;
 
-import core.hades.configuration.DataSource;
+import core.poseidon.configuration.DataSource;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

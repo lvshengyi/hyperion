@@ -1,15 +1,18 @@
-package core.hades.configuration;
+package core.poseidon.configuration;
 
 import common.exception.InitializeException;
 import common.utils.CastUtil;
-import core.hades.constant.DataSourceTypeEnum;
-import core.hades.poseidonsession.PoseidonSessionFactory;
+import core.poseidon.constant.DataSourceTypeEnum;
+import core.poseidon.constant.StatementType;
+import lombok.Getter;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author LvShengyI
@@ -22,6 +25,11 @@ public class Configuration {
      * 默认配置路径
      */
     private static final String DEFAULT_CONFIG_PATH = "src/main/resources/poseidon.xml";
+
+    /**
+     * 默认映射路径
+     */
+    private static final String DEFAULT_MAPPER_PATH = "src/main/resources/poseidon_mapper.xml";
 
     /**
      * 默认最大空闲连接数
@@ -41,12 +49,53 @@ public class Configuration {
     /**
      * 持有dataSource，用于实现单例模式
      */
-    private volatile static DataSource dataSource;
+    @Getter
+    private volatile DataSource dataSource;
+
+    /**
+     * 用于储存初始化后的mapper数据
+     */
+    @Getter
+    private volatile Map<String, StatementMapper> statementMapperMap;
+
+    /**
+     * 配置实例
+     */
+    private volatile static Configuration config;
 
     /**
      * 用于实现单例模式
      */
     private Configuration() {
+    }
+
+    /**
+     * 初始化方法
+     *
+     * @param id
+     * @return
+     */
+    public static Configuration build(String id){
+        if(config == null){
+            synchronized (Configuration.class){
+                if(config == null){
+                    Configuration.config = new Configuration(getDataSource(id), getMapper());
+                }
+            }
+        }
+
+        return config;
+    }
+
+    /**
+     * 实际构造函数
+     *
+     * @param dataSource
+     * @param statementMapperMap
+     */
+    private Configuration(DataSource dataSource, Map<String, StatementMapper> statementMapperMap){
+        this.dataSource = dataSource;
+        this.statementMapperMap = statementMapperMap;
     }
 
     /**
@@ -60,29 +109,6 @@ public class Configuration {
             throw new IllegalArgumentException("DataSource id 不能为空");
         }
 
-        //使用双重锁实现单例模式
-        if (dataSource == null) {
-            synchronized (Configuration.class) {
-                if (dataSource == null) {
-                    dataSource = createDataSource(id);
-                }
-            }
-        }
-
-        if (dataSource == null) {
-            throw new InitializeException("DataSource初始化失败");
-        }
-
-        return dataSource;
-    }
-
-    /**
-     * 读取配置文件，组装成DataSource
-     *
-     * @param id 要获取的DataSource id
-     * @return 找不到对应的id时，返回null
-     */
-    private static DataSource createDataSource(String id) {
         SAXReader reader = new SAXReader();
 
         try {
@@ -96,10 +122,10 @@ public class Configuration {
                 if (id.equals(idValue)) {
                     List<Element> propertyList = dataSourceEle.elements();
                     DataSource dataSource = new DataSource();
-                    String typeValue = dataSourceEle.attributeValue("type");
+                    String typeValue = dataSourceEle.attributeValue("statementType");
 
                     dataSource.setId(idValue);
-                    dataSource.setType(dataSourceEle.attributeValue("type"));
+                    dataSource.setType(dataSourceEle.attributeValue("statementType"));
 
                     for (Element property : propertyList) {
                         String propName = property.attributeValue("name");
@@ -121,9 +147,9 @@ public class Configuration {
                         }
 
                         //如果是使用连接池，则还需要设置空闲、活跃列表线程数
-                        if (!DataSourceTypeEnum.POOL.getDesc().equals(typeValue)) {
-                            continue;
-                        }
+//                        if (!DataSourceTypeEnum.POOL.getDesc().equals(typeValue)) {
+//                            continue;
+//                        }
 
                         switch (propName) {
                             case "maxIdleConnectionNum":
@@ -146,22 +172,65 @@ public class Configuration {
                                 break;
                             default:
                         }
-                    }
 
-                    return dataSource;
+                        return dataSource;
+                    }
                 }
             }
         } catch (DocumentException e) {
             e.printStackTrace();
         }
 
-        return null;
+        throw new InitializeException("dataSource initialize failed, id:" + id);
     }
 
     /**
+     * 获取mapper
+     *
      * @return
      */
-    public static PoseidonSessionFactory build() {
-        return new PoseidonSessionFactory();
+    public static Map<String, StatementMapper> getMapper(){
+        SAXReader reader = new SAXReader();
+        Map<String, StatementMapper> map = new HashMap<>(16);
+
+        try {
+            Document doc = reader.read(DEFAULT_MAPPER_PATH);
+            Element root = doc.getRootElement();
+            List<Element> mapperList = root.elements();
+
+            for (Element mapperEle : mapperList) {
+                StatementMapper mapper = new StatementMapper();
+                String nodeName = mapperEle.getName();
+                String id = mapperEle.attributeValue("id");
+                String nameSpace = mapperEle.attributeValue("nameSpace");
+                String resultType = mapperEle.attributeValue("resultType");
+                String stat = mapperEle.getStringValue();
+                stat = statementPreProcess(stat);
+                String key = String.format("%s.%s", nameSpace, id);
+
+                mapper.setId(id);
+                mapper.setNameSpace(nameSpace);
+                mapper.setStatementType(StatementType.getByDesc(nodeName));
+                mapper.setResultType(resultType);
+                mapper.setStat(stat);
+
+                map.put(key, mapper);
+            }
+        } catch (DocumentException e) {
+            e.printStackTrace();
+        }
+
+        return map;
+    }
+
+    /**
+     * 对mapper中的SQL进行预处理
+     * 去除了换行与头尾的空格
+     *
+     * @param stat
+     * @return
+     */
+    private static String statementPreProcess(String stat){
+        return stat.replaceAll("\n", "").trim();
     }
 }

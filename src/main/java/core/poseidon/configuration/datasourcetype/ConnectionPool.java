@@ -1,7 +1,7 @@
-package core.hades.configuration.datasourcetype;
+package core.poseidon.configuration.datasourcetype;
 
 import common.utils.TimeUtil;
-import core.hades.configuration.DataSource;
+import core.poseidon.configuration.DataSource;
 import lombok.Getter;
 
 import java.lang.reflect.InvocationHandler;
