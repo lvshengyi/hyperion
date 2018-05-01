@@ -1,4 +1,4 @@
-package core.poseidon.Executor.handler;
+package core.poseidon.executor.handler;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -37,14 +37,5 @@ public class StatementHandler {
         }
 
         return head;
-    }
-
-    public static void main(String[] args) {
-        String sql = "INSERT INTO user(username, password, age, max_salary) VALUES (#{username}, #{password}, #{age}, #{maxSalary})";
-        ParamNode head = preProcess(sql);
-
-        while(head != null) {
-
-        }
     }
 }

@@ -1,9 +1,11 @@
 package core.poseidon.session;
 
-import core.poseidon.Executor.Executor;
+import core.poseidon.executor.Executor;
 import core.poseidon.configuration.DataSource;
 import core.poseidon.configuration.StatementMapper;
 import core.poseidon.configuration.datasourcetype.ConnectionUnpool;
+import core.poseidon.executor.IExecutor;
+import core.poseidon.executor.cache.CacheExecutor;
 
 import java.sql.Connection;
 import java.util.List;
@@ -17,7 +19,7 @@ public class PoseidonSession implements IPoseidonSession {
     /**
      * 执行器
      */
-    private Executor executor = new Executor();
+    private IExecutor executor = new CacheExecutor(new Executor());
 
     /**
      * 数据源，来自poseidonSessionFactory

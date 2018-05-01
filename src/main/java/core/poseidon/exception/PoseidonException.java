@@ -1,4 +1,4 @@
-package core.poseidon.Exception;
+package core.poseidon.exception;
 
 /**
  * @author LvShengyI

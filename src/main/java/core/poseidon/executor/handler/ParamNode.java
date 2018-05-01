@@ -1,6 +1,5 @@
-package core.poseidon.Executor.handler;
+package core.poseidon.executor.handler;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 

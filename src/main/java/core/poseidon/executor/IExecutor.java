@@ -1,4 +1,4 @@
-package core.poseidon.Executor;
+package core.poseidon.executor;
 
 import core.poseidon.configuration.StatementMapper;
 

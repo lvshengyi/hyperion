@@ -19,9 +19,9 @@ public class TempTest extends BaseTest {
         Configuration config = Configuration.build(id);
         PoseidonSession session = PoseidonSessionFactory.build(config).openSession();
 
-        User user = session.selectOne("user.findById", 2);
-
-        session.delete("user.delete", user);
+        User user = session.selectOne("user.findById", 4);
+        user = session.selectOne("user.findById", 4);
+//        session.delete("user.delete", user);
 //        System.out.println(user);
 //
 //        user.setMaxSalary(200);
