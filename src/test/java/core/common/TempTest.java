@@ -19,12 +19,14 @@ public class TempTest extends BaseTest {
         Configuration config = Configuration.build(id);
         PoseidonSession session = PoseidonSessionFactory.build(config).openSession();
 
-        User user = session.selectOne("user.findById", 1);
+        User user = session.selectOne("user.findById", 2);
 
-        System.out.println(user);
-
-        user.setMaxSalary(user.getMaxSalary() + 100);
-        session.insert("user.insert", user);
+        session.delete("user.delete", user);
+//        System.out.println(user);
+//
+//        user.setMaxSalary(200);
+//        session.update("user.update", user);
+//        session.delete("user.delete", user);
 //        List<User> userList = session.selectList("user.findAll", null);
 //        System.out.println(userList);
     }

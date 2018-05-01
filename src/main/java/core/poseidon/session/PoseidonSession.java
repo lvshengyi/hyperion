@@ -61,23 +61,30 @@ public class PoseidonSession implements IPoseidonSession {
     }
 
     @Override
-    public Boolean insert(String key, Object param) {
+    public Integer insert(String key, Object param) {
         StatementMapper mapper = this.mapper.get(key);
         ConnectionUnpool connManage = this.dataSource.getConnectionManage();
         Connection conn = connManage.getConnection();
 
-        executor.insert(conn, mapper, param);
-        return true;
+        return executor.insert(conn, mapper, param);
     }
 
     @Override
-    public Integer update(String key, Object params) {
-        return null;
+    public Integer update(String key, Object param) {
+        StatementMapper mapper = this.mapper.get(key);
+        ConnectionUnpool connManage = this.dataSource.getConnectionManage();
+        Connection conn = connManage.getConnection();
+
+        return executor.update(conn, mapper, param);
     }
 
     @Override
-    public Integer delete(String key, Object params) {
-        return null;
+    public Integer delete(String key, Object param) {
+        StatementMapper mapper = this.mapper.get(key);
+        ConnectionUnpool connManage = this.dataSource.getConnectionManage();
+        Connection conn = connManage.getConnection();
+
+        return executor.delete(conn, mapper, param);
     }
 
     @Override

@@ -10,4 +10,10 @@
     <insert id="insert" nameSpace="user" parameterType="biz.model.domain.User">
         INSERT INTO user(username, password, age, max_salary) VALUES (#{username}, #{password}, #{age}, #{maxSalary})
     </insert>
+    <update id="update" nameSpace="user" parameterType="biz.model.domain.User">
+        UPDATE user SET username = #{username}, password = #{password}, age = #{age}, max_salary = #{maxSalary} WHERE id = #{id}
+    </update>
+    <delete id="delete" nameSpace="user" parameterType="biz.model.domain.User">
+        DELETE FROM user WHERE id = #{id}
+    </delete>
 </statementMapperMap>

@@ -29,5 +29,25 @@ public interface IExecutor {
      * @param param
      * @return
      */
-    Boolean insert(Connection conn, StatementMapper statementMapper, Object param);
+    Integer insert(Connection conn, StatementMapper statementMapper, Object param);
+
+    /**
+     * 更新数据
+     *
+     * @param conn
+     * @param statementMapper
+     * @param param
+     * @return
+     */
+    Integer update(Connection conn, StatementMapper statementMapper, Object param);
+
+    /**
+     * 删除数据
+     *
+     * @param conn
+     * @param statementMapper
+     * @param param
+     * @return
+     */
+    Integer delete(Connection conn, StatementMapper statementMapper, Object param);
 }

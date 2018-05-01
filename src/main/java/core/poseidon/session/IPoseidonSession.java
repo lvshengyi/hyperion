@@ -34,7 +34,7 @@ public interface IPoseidonSession {
      * @param params 参数
      * @return       数据id
      */
-    Boolean insert(String key, Object params);
+    Integer insert(String key, Object params);
 
     /**
      * 更新数据
