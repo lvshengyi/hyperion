@@ -57,6 +57,16 @@ public interface IPoseidonSession {
     <T> T getMapper(Class<T> type);
 
     /**
+     * 事务提交
+     */
+    void commit();
+
+    /**
+     * 事务回滚
+     */
+    void rollback();
+
+    /**
      * 关闭session
      */
     void close();

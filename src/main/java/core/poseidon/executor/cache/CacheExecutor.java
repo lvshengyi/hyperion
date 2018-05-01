@@ -12,7 +12,7 @@ import java.util.Map;
 /**
  * @author LvShengyI
  */
-public class CacheExecutor implements IExecutor {
+public class CacheExecutor implements IExecutor, ICacheExecutor {
 
     private Executor executor;
 
@@ -39,22 +39,27 @@ public class CacheExecutor implements IExecutor {
 
     @Override
     public Integer insert(Connection conn, StatementMapper statementMapper, Object param) {
-        cache = new HashMap<>(16);
+        clearCache();
 
         return executor.insert(conn, statementMapper, param);
     }
 
     @Override
     public Integer update(Connection conn, StatementMapper statementMapper, Object param) {
-        cache = new HashMap<>(16);
+        clearCache();
 
         return executor.update(conn, statementMapper, param);
     }
 
     @Override
     public Integer delete(Connection conn, StatementMapper statementMapper, Object param) {
-        cache = new HashMap<>(16);
+        clearCache();
 
         return executor.delete(conn, statementMapper, param);
+    }
+
+    @Override
+    public void clearCache() {
+        cache = new HashMap<>(16);
     }
 }

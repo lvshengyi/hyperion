@@ -13,14 +13,17 @@ import java.util.List;
 /**
  * @author LvShengyI
  */
-public class TempTest extends BaseTest {
+public class TempTest {
     public static void main(String[] args) {
         String id = "mysql";
         Configuration config = Configuration.build(id);
         PoseidonSession session = PoseidonSessionFactory.build(config).openSession();
 
         User user = session.selectOne("user.findById", 4);
-        user = session.selectOne("user.findById", 4);
+        session.insert("user.insert", user);
+
+        session.commit();
+//        session.rollback();
 //        session.delete("user.delete", user);
 //        System.out.println(user);
 //
