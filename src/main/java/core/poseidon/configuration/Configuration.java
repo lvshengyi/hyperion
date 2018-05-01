@@ -2,6 +2,8 @@ package core.poseidon.configuration;
 
 import common.exception.InitializeException;
 import common.utils.CastUtil;
+import core.poseidon.configuration.datasourcetype.ConnectionPool;
+import core.poseidon.configuration.datasourcetype.ConnectionUnpool;
 import core.poseidon.constant.DataSourceTypeEnum;
 import core.poseidon.constant.StatementType;
 import lombok.Getter;
@@ -122,7 +124,6 @@ public class Configuration {
                 if (id.equals(idValue)) {
                     List<Element> propertyList = dataSourceEle.elements();
                     DataSource dataSource = new DataSource();
-                    String typeValue = dataSourceEle.attributeValue("statementType");
 
                     dataSource.setId(idValue);
                     dataSource.setType(dataSourceEle.attributeValue("statementType"));
@@ -143,15 +144,6 @@ public class Configuration {
                             case "password":
                                 dataSource.setPassword(property.attributeValue("value"));
                                 break;
-                            default:
-                        }
-
-                        //如果是使用连接池，则还需要设置空闲、活跃列表线程数
-//                        if (!DataSourceTypeEnum.POOL.getDesc().equals(typeValue)) {
-//                            continue;
-//                        }
-
-                        switch (propName) {
                             case "maxIdleConnectionNum":
                                 dataSource.setMaxIdleConnectionNum(
                                         CastUtil.castToInteger(
@@ -172,9 +164,18 @@ public class Configuration {
                                 break;
                             default:
                         }
-
-                        return dataSource;
                     }
+
+                    String dataSourceType = dataSourceEle.attributeValue("type");
+                    if(DataSourceTypeEnum.UNPOOLED.getDesc().equals(dataSourceType)){
+                        dataSource.setConnectionManage(new ConnectionUnpool(dataSource));
+                    }else if(DataSourceTypeEnum.POOL.getDesc().equals(dataSourceType)){
+                        dataSource.setConnectionManage(new ConnectionPool(dataSource));
+                    }else{
+                        throw new IllegalArgumentException("检查配置文件中数据库连接类型的参数");
+                    }
+
+                    return dataSource;
                 }
             }
         } catch (DocumentException e) {
@@ -203,6 +204,7 @@ public class Configuration {
                 String nodeName = mapperEle.getName();
                 String id = mapperEle.attributeValue("id");
                 String nameSpace = mapperEle.attributeValue("nameSpace");
+                String parameterType = mapperEle.attributeValue("parameterType");
                 String resultType = mapperEle.attributeValue("resultType");
                 String stat = mapperEle.getStringValue();
                 stat = statementPreProcess(stat);
@@ -211,6 +213,7 @@ public class Configuration {
                 mapper.setId(id);
                 mapper.setNameSpace(nameSpace);
                 mapper.setStatementType(StatementType.getByDesc(nodeName));
+                mapper.setParameterType(parameterType);
                 mapper.setResultType(resultType);
                 mapper.setStat(stat);
 

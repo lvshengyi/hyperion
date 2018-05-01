@@ -1,12 +1,14 @@
 package core.common;
 
 import base.BaseTest;
+import biz.model.domain.User;
 import core.poseidon.configuration.Configuration;
 import core.poseidon.session.PoseidonSession;
 import core.poseidon.session.PoseidonSessionFactory;
 
 import java.lang.reflect.Method;
 import java.sql.Connection;
+import java.util.List;
 
 /**
  * @author LvShengyI
@@ -17,6 +19,13 @@ public class TempTest extends BaseTest {
         Configuration config = Configuration.build(id);
         PoseidonSession session = PoseidonSessionFactory.build(config).openSession();
 
-        System.out.println(session);
+        User user = session.selectOne("user.findById", 1);
+
+        System.out.println(user);
+
+        user.setMaxSalary(user.getMaxSalary() + 100);
+        session.insert("user.insert", user);
+//        List<User> userList = session.selectList("user.findAll", null);
+//        System.out.println(userList);
     }
 }

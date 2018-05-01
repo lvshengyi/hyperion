@@ -14,6 +14,11 @@ public class User {
     private Integer id;
 
     /**
+     * 用户名
+     */
+    private String username;
+
+    /**
      * 密码
      */
     private String password;
@@ -22,4 +27,9 @@ public class User {
      * 年龄
      */
     private Integer age;
+
+    /**
+     * 最大佣金
+     */
+    private Integer maxSalary;
 }

@@ -1,0 +1,60 @@
+package core.poseidon.Executor;
+
+import core.poseidon.Executor.handler.ParamNode;
+import core.poseidon.Executor.handler.ParameterHandler;
+import core.poseidon.Executor.handler.ResultSetHandler;
+import core.poseidon.Executor.handler.StatementHandler;
+import core.poseidon.configuration.StatementMapper;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.sql.*;
+import java.util.List;
+
+/**
+ * @author LvShengyI
+ */
+public class Executor implements IExecutor {
+
+    @Override
+    public <E> List<E> select(Connection conn, StatementMapper statementMapper, Object param) {
+        String sql = StatementHandler.handle(statementMapper.getStat());
+        PreparedStatement stat;
+
+        try {
+            stat = conn.prepareStatement(sql);
+            ParameterHandler.handle(stat, param);
+            ResultSet rs = stat.executeQuery();
+            String resultType = statementMapper.getResultType();
+            Class clz = Class.forName(resultType);
+
+            return ResultSetHandler.handle(rs, clz);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    @Override
+    public Boolean insert(Connection conn, StatementMapper statementMapper, Object param) {
+        String rawSql = statementMapper.getStat();
+        ParamNode node = StatementHandler.preProcess(rawSql);
+        String sql = StatementHandler.handle(rawSql);
+        PreparedStatement stat;
+        try {
+            stat = conn.prepareStatement(sql);
+            ParameterHandler.handle(stat, node, param);
+
+            return stat.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+
+}

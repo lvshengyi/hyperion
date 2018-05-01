@@ -1,15 +1,23 @@
 package core.poseidon.session;
 
+import core.poseidon.Executor.Executor;
 import core.poseidon.configuration.DataSource;
 import core.poseidon.configuration.StatementMapper;
+import core.poseidon.configuration.datasourcetype.ConnectionUnpool;
 
+import java.sql.Connection;
 import java.util.List;
 import java.util.Map;
 
 /**
  * @author LvShengyI
  */
-public class PoseidonSession implements IPoseidonSession{
+public class PoseidonSession implements IPoseidonSession {
+
+    /**
+     * 执行器
+     */
+    private Executor executor = new Executor();
 
     /**
      * 数据源，来自poseidonSessionFactory
@@ -24,35 +32,51 @@ public class PoseidonSession implements IPoseidonSession{
     /**
      * 对外屏蔽构造函数
      */
-    private PoseidonSession(){};
+    private PoseidonSession() {
+    }
 
-    public PoseidonSession(DataSource dataSource, Map<String, StatementMapper> mapper){
+    public PoseidonSession(DataSource dataSource, Map<String, StatementMapper> mapper) {
         this.dataSource = dataSource;
         this.mapper = mapper;
     }
 
     @Override
-    public <T> T selectOne(String stat, Object params) {
+    public <T> T selectOne(String key, Object param) {
+        StatementMapper mapper = this.mapper.get(key);
+        ConnectionUnpool connManage = this.dataSource.getConnectionManage();
+        Connection conn = connManage.getConnection();
+
+        List<T> result = executor.select(conn, mapper, param);
+
+        return result == null || result.isEmpty() ? null : result.get(0);
+    }
+
+    @Override
+    public <E> List<E> selectList(String key, Object param) {
+        StatementMapper mapper = this.mapper.get(key);
+        ConnectionUnpool connManage = this.dataSource.getConnectionManage();
+        Connection conn = connManage.getConnection();
+
+        return executor.select(conn, mapper, param);
+    }
+
+    @Override
+    public Boolean insert(String key, Object param) {
+        StatementMapper mapper = this.mapper.get(key);
+        ConnectionUnpool connManage = this.dataSource.getConnectionManage();
+        Connection conn = connManage.getConnection();
+
+        executor.insert(conn, mapper, param);
+        return true;
+    }
+
+    @Override
+    public Integer update(String key, Object params) {
         return null;
     }
 
     @Override
-    public <E> List<E> selectList(String stat, Object params) {
-        return null;
-    }
-
-    @Override
-    public Integer insert(String stat, Object params) {
-        return null;
-    }
-
-    @Override
-    public Integer update(String stat, Object params) {
-        return null;
-    }
-
-    @Override
-    public Integer delete(String stat, Object params) {
+    public Integer delete(String key, Object params) {
         return null;
     }
 

@@ -32,6 +32,11 @@ public class StatementMapper {
     private String stat;
 
     /**
+     * 参数类型
+     */
+    private String parameterType;
+
+    /**
      * 返回结果类型
      */
     private String resultType;

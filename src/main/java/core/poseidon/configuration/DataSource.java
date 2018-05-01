@@ -1,5 +1,6 @@
 package core.poseidon.configuration;
 
+import core.poseidon.configuration.datasourcetype.ConnectionUnpool;
 import lombok.Data;
 
 /**
@@ -18,6 +19,11 @@ public class DataSource {
      * 数据源类型（使用连接池或不使用）
      */
     private String type;
+
+    /**
+     * 连接池管理
+     */
+    private ConnectionUnpool connectionManage;
 
     /**
      * 数据库驱动
