@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<beans>
+    <component-scan base-package="src.main.java.biz"/>
+    <bean id="userBean" class="biz.model.domain.User">
+        <property name="username" value="beanUsername" />
+        <property name="password" value="beanPassword" />
+        <property name="age" value="34" />
+        <property name="maxSalary" value="4500" />
+    </bean>
+</beans>

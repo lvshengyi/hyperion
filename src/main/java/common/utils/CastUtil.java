@@ -17,6 +17,30 @@ public class CastUtil {
         return obj == null ? defaultValue : String.valueOf(obj);
     }
 
+    public static Float castToFloat(Object obj) {
+        Float DEFAULT_VALUE = 0f;
+
+        return castToFloat(obj, DEFAULT_VALUE);
+    }
+
+    public static Float castToFloat(Object obj, Float defaultValue) {
+        Float value = defaultValue;
+
+        if (obj != null) {
+            String strValue = castToString(obj);
+
+            if (StringUtils.isNotEmpty(strValue)) {
+                try {
+                    value = Float.parseFloat(strValue);
+                } catch (Exception e) {
+                    value = defaultValue;
+                }
+            }
+        }
+
+        return value;
+    }
+
     public static Double castToDouble(Object obj) {
         Double DEFAULT_VALUE = 0d;
 
