@@ -325,4 +325,33 @@ public class BeanContainer {
             }
         }
     }
+
+    /**
+     * 获取有指定注解的class
+     *
+     * @param target
+     * @return
+     */
+    public static Set<Class> getClassSet(Class target){
+        ini();
+        Set<Class> res = new HashSet<>(16);
+
+        for(Class clz : CLASS_SET){
+            if(clz.isAnnotationPresent(target)){
+                res.add(clz);
+            }
+        }
+
+        return res;
+    }
+
+    /**
+     * 根据类获取指定的bean
+     *
+     * @param className
+     * @return
+     */
+    public static Object getBean(String className){
+        return BEAN_CONTAINER.get(className);
+    }
 }
