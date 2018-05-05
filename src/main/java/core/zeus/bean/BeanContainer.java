@@ -15,6 +15,7 @@ import org.dom4j.io.SAXReader;
 
 import java.io.File;
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.*;
 
 /**
@@ -32,7 +33,8 @@ public class BeanContainer {
     /**
      * 默认配置路径
      */
-    private final static String DEFAULT_CONFIG_PATH = "src/main/resources/zeus/zeus.xml";
+//    private final static String DEFAULT_CONFIG_PATH = "src/main/resources/zeus/zeus.xml";
+    private final static String DEFAULT_CONFIG_PATH = "G:\\Work\\hyperion\\src\\main\\resources\\zeus\\zeus.xml";
 
     /**
      * 标记以注解方式实现自动注入
@@ -144,7 +146,7 @@ public class BeanContainer {
                     getClassSetByScan(childFile.getPath());
                 }
             } else {
-                String path = file.getPath().replace("src\\main\\java\\", "")
+                String path = file.getPath().replace("G:\\Work\\hyperion\\src\\main\\java\\", "")
                         .replace(".java", "")
                         .replace("\\", ".");
 
@@ -339,6 +341,17 @@ public class BeanContainer {
         for(Class clz : CLASS_SET){
             if(clz.isAnnotationPresent(target)){
                 res.add(clz);
+
+                continue;
+            }
+
+            Method[] methods = clz.getMethods();
+            for(Method method :methods){
+                if(method.isAnnotationPresent(target)){
+                    res.add(clz);
+
+                    continue;
+                }
             }
         }
 

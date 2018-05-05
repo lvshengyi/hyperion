@@ -8,7 +8,7 @@ import java.lang.annotation.Target;
 /**
  * @author LvShengyI
  */
-@Target(ElementType.FIELD)
+@Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Action {
     String value();

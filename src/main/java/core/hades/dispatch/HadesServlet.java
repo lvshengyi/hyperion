@@ -5,12 +5,14 @@ import com.sun.deploy.util.ReflectionUtil;
 import common.utils.CodecUtil;
 import common.utils.StreamUtil;
 import core.zeus.bean.BeanContainer;
+import core.zeus.bean.ZeusContext;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRegistration;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -25,6 +27,7 @@ import java.util.Map;
 /**
  * @author LvShengyI
  */
+@WebServlet(urlPatterns = "/*", loadOnStartup = 0)
 public class HadesServlet extends HttpServlet {
 
     private static final String JSP_PATH = "/WEB-INF/view/";
