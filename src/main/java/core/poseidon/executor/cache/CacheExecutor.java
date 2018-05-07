@@ -3,6 +3,7 @@ package core.poseidon.executor.cache;
 import core.poseidon.configuration.StatementMapper;
 import core.poseidon.executor.Executor;
 import core.poseidon.executor.IExecutor;
+import lombok.extern.slf4j.Slf4j;
 
 import java.sql.Connection;
 import java.util.HashMap;
@@ -28,10 +29,12 @@ public class CacheExecutor implements IExecutor, ICacheExecutor {
         List<Object> value = cache.get(key);
 
         if(value != null){
+            System.out.println("本次查询使用了缓存");
             return (List<E>) value;
         }
 
         List<E> result = executor.select(conn, statementMapper, param);
+        System.out.println("本次查询访问了数据库");
         cache.put(key, (List<Object>) result);
 
         return result;

@@ -33,7 +33,6 @@ public class BeanContainer {
     /**
      * 默认配置路径
      */
-//    private final static String DEFAULT_CONFIG_PATH = "src/main/resources/zeus/zeus.xml";
     private final static String DEFAULT_CONFIG_PATH = "G:\\Work\\hyperion\\src\\main\\resources\\zeus\\zeus.xml";
 
     /**

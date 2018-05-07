@@ -11,6 +11,9 @@
     <title>test</title>
 </head>
 <body>
-    1111
+<form action="show" method="post">
+    <label>输入用户ID:</label><input name="userId" type="text" />
+    <input type="submit" value="提交" />
+</form>
 </body>
 </html>

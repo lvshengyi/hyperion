@@ -26,12 +26,12 @@ public class Configuration {
     /**
      * 默认配置路径
      */
-    private static final String DEFAULT_CONFIG_PATH = "src/main/resources/poseidon/poseidon.xml";
+    private static final String DEFAULT_CONFIG_PATH = "G:\\Work\\hyperion\\src\\main\\resources\\poseidon\\poseidon.xml";
 
     /**
      * 默认映射路径
      */
-    private static final String DEFAULT_MAPPER_PATH = "src/main/resources/poseidon/poseidon_mapper.xml";
+    private static final String DEFAULT_MAPPER_PATH = "G:\\Work\\hyperion\\src\\main\\resources\\poseidon\\poseidon_mapper.xml";
 
     /**
      * 默认最大空闲连接数

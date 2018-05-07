@@ -1,6 +1,9 @@
 package biz.controller;
 
+import biz.model.domain.User;
 import biz.service.PageService;
+import biz.service.UserService;
+import common.utils.CastUtil;
 import core.hades.annotation.Action;
 import core.hades.annotation.Controller;
 import core.hades.dispatch.Param;
@@ -11,20 +14,21 @@ import core.zeus.annotation.Inject;
  * @author LvShengyI
  */
 @Controller
-public class TestController {
+public class IndexController {
 
     @Inject
-    private PageService pageService;
+    private UserService userService;
 
-    @Action("get:/test")
+    @Action("get:/index")
     public View index(Param param){
-        System.out.println(2222);
         return new View("index.jsp");
     }
 
-    @Action("post:/test")
+    @Action("post:/show")
     public View show(Param param){
-        System.out.println(3333);
-        return new View("index.jsp");
+        Integer userId = CastUtil.castToInteger(param.getParamMap().get("userId"));
+        User user = userService.getUserById(userId);
+
+        return new View("show.jsp").addModel("user", user);
     }
 }
