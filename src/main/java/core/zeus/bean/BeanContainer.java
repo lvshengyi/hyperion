@@ -111,7 +111,6 @@ public class BeanContainer {
             synchronized (ZeusContext.class) {
                 if (!is_ini) {
                     beanContainerIni(getBasePackagePath());
-                    proxyIni();
                 }
 
                 is_ini = true;
@@ -188,6 +187,7 @@ public class BeanContainer {
                 for (Class clz : CLASS_SET) {
                     BEAN_CONTAINER.put(clz.getName(), clz.newInstance());
                 }
+                proxyIni();
                 beanIni();
             }
         } catch (InstantiationException e) {
@@ -316,7 +316,8 @@ public class BeanContainer {
 
                 for (Class clz : CLASS_SET) {
                     if (clz.isAnnotationPresent(targetAnnoClass)) {
-                        BEAN_CONTAINER.put(clz.getName(), ProxyManager.createProxy(clz, proxyList));
+                        Object obj = ProxyManager.createProxy(clz, proxyList);
+                        BEAN_CONTAINER.put(clz.getName(), obj);
                     }
                 }
             } catch (InstantiationException e) {

@@ -24,4 +24,11 @@ public class UserService {
     public User getUserById(Integer id){
         return session.selectOne("user.findById", id);
     }
+
+    public Integer save(User user){
+        Integer result = session.insert("user.insert", user);
+        session.commit();
+
+        return result;
+    }
 }

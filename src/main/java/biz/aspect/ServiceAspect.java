@@ -13,13 +13,22 @@ import java.lang.reflect.Method;
 public class ServiceAspect extends AspectProxy {
     @Override
     public void before(Class clz, Method method, Object[] params) throws Throwable {
-        System.out.println("前置方法");
-        System.out.println("方法名:" + method.getName());
+        System.out.println(method.getName() + "前置方法");
+        System.out.print("参数：");
+        for (Object param : params) {
+            System.out.print(param);
+        }
+        System.out.println();
     }
 
     @Override
     public void after(Class clz, Method method, Object[] params, Object result) throws Throwable {
-        System.out.println("后置方法");
-        System.out.println("方法名:" + method.getName());
+        System.out.println(method.getName() + "后置方法");
+        System.out.print("参数：");
+        for (Object param : params) {
+            System.out.print(param);
+        }
+        System.out.println();
+        System.out.println("返回的结果是：" + result);
     }
 }
